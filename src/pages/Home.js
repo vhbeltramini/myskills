@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
     View, 
     Text, 
@@ -6,7 +6,6 @@ import {
     TextInput, 
     Platform,
     FlatList,
-    ScrollView
 } from 'react-native';
 import { Button } from '../components/Button';
 import { SkillCard } from '../components/SkillCard';
@@ -37,13 +36,13 @@ export function Home() {
                 My Skills
             </Text>
 
-            <ScrollView showsVerticalScrollIndicator={false} >
-            { 
-                mySkills.map(skill => ( 
-                    <SkillCard key={skill} skill={skill} />
-                ))
-            }
-            </ScrollView>
+            <FlatList 
+                data={mySkills} 
+                keyExtractor={item => item}
+                renderItem={({ item }) => (
+                    <SkillCard skill={item} />
+                )}
+            />
 
         </View>
 
