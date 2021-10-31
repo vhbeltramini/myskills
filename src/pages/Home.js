@@ -14,14 +14,33 @@ export function Home() {
 
     const [newSkill, setNewSkill] = useState('');
     const [mySkills, setMySkills] = useState([]);
+    const [gretting, setGretting] = useState('');
 
     function handleAddNewSkill() {
         setMySkills(oldSkills => [...oldSkills, newSkill]);
     }
 
+    useEffect(() => {
+        const currentHours = new Date().getHours();
+        switch(true) {
+            case currentHours < 12:
+                setGretting('Good Morning!');
+                break;
+            case currentHours >= 12 && currentHours < 18:
+                setGretting('Good Afternoon!');
+                break;
+            case currentHours > 18: 
+                setGretting('Good Night!');
+                break;
+        }
+    }, []);
+
     return( 
         <View style={styles.container}>
             <Text style={styles.title}>Welcome, Victor Hugo</Text>
+            <Text style={styles.grettings}>
+                { gretting }
+            </Text>
 
             <TextInput 
                 style={styles.input}
@@ -69,5 +88,8 @@ const styles = StyleSheet.create({
         padding: Platform.OS === 'ios' ? 15 : 10,
         marginTop: 30,
         borderRadius: 7
+    },
+    grettings: {
+        color: '#fff',
     }
 });
